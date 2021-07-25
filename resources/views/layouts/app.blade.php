@@ -12,6 +12,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    @yield('javascript')
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -20,15 +21,19 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+            <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img src="https://yt3.ggpht.com/qNfj97MVbdfdGW2oyLETBuffb7m1rRYR0I6uwEvOu3GNivCRW6gEHMSTZ9KRbbpjQMLPR3Ks=s88-c-k-c0x00ffffff-no-rj" alt="" width="30" height="24">
                 </a>
+                <!-- <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a> -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -81,10 +86,12 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                        <a href="/home" class="list-group-item list-group-item-action active" aria-current="true">
                             Channel List
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action">Add Channel</a>
+                        <a href="/channel" class="list-group-item list-group-item-action">
+                            Add Channel
+                        </a>
                         <a href="#" class="list-group-item list-group-item-action">User Management</a>
                     </div>
                 </div>

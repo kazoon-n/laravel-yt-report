@@ -2,3 +2,15 @@
     max-width: 100%;
     height: 50px;
 }
+
+.lg-thumbnail{
+    max-width: 150%;
+    height: 150px;
+}
+
+.elipsis{
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre-line;
+}

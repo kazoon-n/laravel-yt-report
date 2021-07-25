@@ -11,16 +11,24 @@
         </tr>
     </thead>
     <tbody>
+        @foreach($channels as $channel)
         <tr>
-            @foreach($channels as $channel)
-            <th scope="row">
-                <img src="{{ asset('img/'.$channel['icon']) }}" class="img-thumbnail img-fluid thumbnail" alt="image">
-            </th>
-            <td>{{ $channel['name'] }}</td>
-            <td>{{ $channel['subscriber'] }}</td>
+            <td scope="row">
+                <img src="{{ asset($channel['icon']) }}" class="img-thumbnail img-fluid thumbnail" alt="image">
+            </td>
+            <td>
+                <a href="/video_list/{{$channel['id']}}" class="card-text d-block elipsis">{{ $channel['name'] }}</a>
+            </td>
+            <td>
+                @if($channel['subscriber'] < 0)
+                    Unknown
+                @else
+                    {{ $channel['subscriber'] }}
+                @endif
+            </td>
             <td>{{ $channel['id'] }}</td>
-            @endforeach
         </tr>
+        @endforeach
     </tbody>
 </table>
 @endsection
