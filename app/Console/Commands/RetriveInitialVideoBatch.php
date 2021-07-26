@@ -17,7 +17,7 @@ class RetriveInitialVideoBatch extends Command
      *
      * @var string
      */
-    protected $signature = 'batch:retriveVideo';
+    protected $signature = 'retriveVideo {id} {ch_id}';
 
     /**
      * The console command description.
@@ -43,16 +43,15 @@ class RetriveInitialVideoBatch extends Command
      */
     public function handle()
     {
+        //Params Initialize
+        $int_ch_id = $this->argument('id');
+        $ch_id = $this->argument('ch_id');
+
         // Google Initialize
         $client = new Google_Client();
         $client->setApplicationName(env('APP_NAME'));
         $client->setDeveloperKey(getenv('API_KEY'));
         $youtube = new Google_Service_YouTube($client);
-
-
-        // $ch_id = $channels['ch_id'];
-        $ch_id = "UC910qpzjNM0l5a7OyTskkKw";
-        $int_ch_id = 8;
 
         /*
             Request for getting video list
@@ -87,7 +86,6 @@ class RetriveInitialVideoBatch extends Command
         foreach ($vdListResults as $result) {
             $videoIds[] = $result['id']['videoId'];
         }
-        var_dump($videoIds);
 
 
         /*
@@ -124,7 +122,7 @@ class RetriveInitialVideoBatch extends Command
                 DB::transaction(function () use ($vdDetail, $int_ch_id) {
                     $snippet = $vdDetail['snippet'];
                     $statistics = $vdDetail['statistics'];
-                    Video::insert([
+                    $upsert_video = [
                         'video_id' => $vdDetail['id'],
                         'name' => $snippet['title'],
                         'thumbnail' => $snippet['thumbnails']['default']['url'],
@@ -133,7 +131,11 @@ class RetriveInitialVideoBatch extends Command
                         'likes' => $statistics['likeCount'],
                         'comments' => $statistics['commentCount'],
                         'channel_id' => $int_ch_id
-                    ]);
+                    ];
+                    var_dump($upsert_video);
+                    $lookup = Video::where('video_id', $vdDetail['id']);
+                    $lookup->exists() ? $lookup->update($upsert_video) : $lookup->insert($upsert_video);
+                    
                 });
             }
 

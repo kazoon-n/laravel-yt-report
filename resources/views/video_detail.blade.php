@@ -40,15 +40,24 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="m-3">
+    <div class="row">
+        <div>
+            <input value="Back" onclick="history.back();" type="button" class="mr-3">
+        </div>
+        <div>
+            <h4 class="align-middle">{{ $video[0]['name'] }}</h4>
+        </div>
+    </div>
+</div>
+
+<div class>
     <div class="row">
         <div class="col-3 m-3">
             <h4>Thumbnail</h4>
             <img src="{{ asset($video[0]['thumbnail']) }}" class="img-thumbnail img-fluid lg-thumbnail" alt="image">
         </div>
         <div class="col-7 m-3">
-            <h4>Video Detail</h4>
-            <p>{{ $video[0]['name'] }}</p>
             <h4>Description</h4>
             <p><a id="desc-button" class="desc-button"><b>Open Description</b></a></p>
             <p id="desc-target" class="desc-content" style="display: none;">{{ $video[0]['description'] }}</p>

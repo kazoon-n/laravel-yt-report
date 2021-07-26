@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 use App\Models\DailyVideo;
+use App\Models\User;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Google_Client;
@@ -12,6 +13,7 @@ use Google_Service_Exception;
 use Google_Exception;
 use Illuminate\Support\Facades\DB;
 use DateTimeImmutable;
+use Illuminate\Support\Facades\Hash;
 
 
 class HomeController extends Controller
@@ -33,18 +35,78 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Channel List
+        $channels = Channel::where('user_id', '=', \Auth::id())
+            ->whereNull('deleted_at')
+            ->orderBy('id', 'DESC')
+            ->get();
+        
+        $page = "channel";
+
+        return view('channel_table', compact('channels', 'page'));
+    }
+
+    public function remove_channel(Request $request)
+    {
+        $posts = $request->all();
+
+        Channel::where('id', $posts['channel_id'])
+           ->update(['deleted_at' => date("Y-m-d H:i:s", time())]);
+
         $channels = Channel::where('user_id', '=', \Auth::id())
             ->whereNull('deleted_at')
             ->orderBy('id', 'DESC')
             ->get();
 
-        return view('channel_table', compact('channels'));
+        $page = "channel";
+
+        return view('channel_table', compact('channels', 'page'));
+    }
+
+
+    public function user_list()
+    {
+        $users = User::orderBy('id', 'DESC')
+            ->get();       
+
+        $page = "user";
+        return view('user_table', compact('users', 'page'));
+    }
+
+    public function remove_user(Request $request)
+    {
+        $posts = $request->all();
+
+        User::where('id', $posts['user_id'])->delete();
+
+        return redirect('user_list');
+    }
+
+    public function register_user(Request $request)
+    {
+        $posts = $request->all();
+
+        User::create([
+            'name' => $posts['name'],
+            'email' => $posts['email'],
+            'password' => Hash::make($posts['password']),
+        ]);
+
+        $users = User::orderBy('id', 'DESC')
+        ->get();
+
+        $page = "user";
+
+        return view('user_table', compact('users', 'page'));
     }
 
     public function channel()
     {
         $flag = false;
-        return view('add_channel', compact('flag'));
+
+        $page = "add_channel";
+
+        return view('add_channel', compact('flag', 'page'));
     }
 
     public function search_channel(Request $request)
@@ -84,8 +146,9 @@ class HomeController extends Controller
 
         $channel = $channels[0];        
         $flag = true;
+        $page = "add_channel";
 
-        return view('add_channel', compact('channel', 'flag'));
+        return view('add_channel', compact('channel', 'flag', 'page'));
     }
 
     public function add_channel(Request $request)
@@ -124,7 +187,7 @@ class HomeController extends Controller
             Channel::insert([
                 'ch_id' => $channel_detail[0]['id'],
                 'name' => $snippet['title'],
-                'subscriber' => $statistics['subscriberCount'],
+                'subscriber' => $statistics['subscriberCount'] != null ? $statistics['subscriberCount'] : -1,
                 'icon' => $snippet['thumbnails']['default']['url'],
                 'user_id' => \Auth::id()
             ]);
@@ -141,7 +204,12 @@ class HomeController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
 
-        return view('video_list', compact('videos'));
+        $channel = Channel::where('id', '=', $id)
+            ->get();
+
+        $page = "channel";
+
+        return view('video_list', compact('videos', 'channel', 'page'));
     }
 
     public function video_detail($id, Request $request)
@@ -181,6 +249,8 @@ class HomeController extends Controller
             $dataPoints[] = array($daily_video['date'], $daily_video[$metrics]);
         }
 
-        return view('video_detail', compact('id', 'video', 'dataPoints'));
+        $page = "channel";
+
+        return view('video_detail', compact('id', 'video', 'dataPoints', 'page'));
     }
 }

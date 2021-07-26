@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('javascript')
+<script src="/js/utility.js"></script>
+@endsection
+
 @section('content')
 <table class="table table-hover">
     <thead>
@@ -20,13 +24,14 @@
                 <a href="/video_list/{{$channel['id']}}" class="card-text d-block elipsis">{{ $channel['name'] }}</a>
             </td>
             <td>
-                @if($channel['subscriber'] < 0)
-                    Unknown
-                @else
-                    {{ $channel['subscriber'] }}
-                @endif
+                @if($channel['subscriber'] < 0) Unknown @else {{ $channel['subscriber'] }} @endif </td>
+            <td>
+                <form action="{{ route('remove_channel') }}" id="delete-form" method="POST">
+                    @csrf
+                    <input type="hidden" name="channel_id" value="{{ $channel['id'] }}" />
+                    <i class="fas fa-trash mr-3" onclick="deleteHandle(event);"></i>
+                </form>
             </td>
-            <td>{{ $channel['id'] }}</td>
         </tr>
         @endforeach
     </tbody>

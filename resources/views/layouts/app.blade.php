@@ -12,6 +12,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
     @yield('javascript')
 
     <!-- Fonts -->
@@ -21,6 +23,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 
@@ -29,11 +32,8 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="https://yt3.ggpht.com/qNfj97MVbdfdGW2oyLETBuffb7m1rRYR0I6uwEvOu3GNivCRW6gEHMSTZ9KRbbpjQMLPR3Ks=s88-c-k-c0x00ffffff-no-rj" alt="" width="30" height="24">
+                    <img src="{{ asset('img/header-logo.png') }}" alt="" width="10%">
                 </a>
-                <!-- <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a> -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -86,19 +86,24 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="list-group">
-                        <a href="/home" class="list-group-item list-group-item-action active" aria-current="true">
+                        <a href="/home" class="list-group-item list-group-item-action
+                            @if($page=="channel") active @endif ">
                             Channel List
                         </a>
-                        <a href="/channel" class="list-group-item list-group-item-action">
+                        <a href=" /channel" class="list-group-item list-group-item-action 
+                            @if($page=="add_channel") active @endif ">
                             Add Channel
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action">User Management</a>
+                        <a href=" /user_list" class="list-group-item list-group-item-action
+                            @if($page=="user") active @endif ">
+                            User Management
+                        </a>
                     </div>
                 </div>
-                <div class="col-md-10">
-                    @yield('content')
+                <div class=" col-md-10">
+                            @yield('content')
+                    </div>
                 </div>
-            </div>
         </main>
     </div>
 </body>

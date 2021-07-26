@@ -24,7 +24,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        //Get all video_details
+        $schedule->call('batch:getAllRetrivalVideo')->dailyAt('01:00')->timezone('Asia/Bangkok');
+        //Get all daily_video
+        $schedule->call('batch:getDailyVideoAll')->dailyAt('01:00')->timezone('Asia/Bangkok');
+
     }
 
     /**

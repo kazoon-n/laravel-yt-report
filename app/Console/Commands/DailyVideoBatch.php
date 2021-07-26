@@ -18,7 +18,7 @@ class DailyVideoBatch extends Command
      *
      * @var string
      */
-    protected $signature = 'batch:getDailyVideo';
+    protected $signature = 'getDailyVideo {int_ch_id} {date}';
 
     /**
      * The console command description.
@@ -44,15 +44,15 @@ class DailyVideoBatch extends Command
      */
     public function handle()
     {
+        //Params Initialize
+        $int_ch_id = $this->argument('int_ch_id');
+        $date = $this->argument('date');
+
         // Google Initialize
         $client = new Google_Client();
         $client->setApplicationName(env('APP_NAME'));
         $client->setDeveloperKey(getenv('API_KEY'));
         $youtube = new Google_Service_YouTube($client);
-
-        // set channels
-        $int_ch_id = 8;
-        $date = '2021-07-23';
 
         $videos = Video::where('channel_id', '=', $int_ch_id)
         ->whereNull('deleted_at')
@@ -60,7 +60,7 @@ class DailyVideoBatch extends Command
             ->get();
 
         foreach($videos as $video){
-            var_dump($video);
+            var_dump($video['name']);
             $query['id'] = $video['video_id'];
             $vdDetails = [];
             $pageToken = "default";
@@ -84,6 +84,7 @@ class DailyVideoBatch extends Command
 
             DB::transaction(function () use ($date, $vdDetails, $video) {
                 $statistics = $vdDetails[0]['statistics'];
+                
                 DailyVideo::insert([
                     'date' => $date,
                     'views' => $statistics['viewCount'] - $video['views'],

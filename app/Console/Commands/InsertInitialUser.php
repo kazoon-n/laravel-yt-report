@@ -3,30 +3,24 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
-use Google_Client;
-use Google_Service_YouTube;
-use Google_Service_Exception;
-use Google_Exception;
-use App\Models\Channel;
-use App\Models\Video;
-use Symfony\Component\VarDumper\VarDumper;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
-class HogeBatch extends Command
+class InsertInitialUser extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'batch:hoge {date?}';
+    protected $signature = 'batch:initialUser';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command Batch test';
+    protected $description = 'Command description';
 
     /**
      * Create a new command instance.
@@ -45,12 +39,16 @@ class HogeBatch extends Command
      */
     public function handle()
     {
-        $hoge = $this->argument('date');
-        if(!$hoge){
-            echo "cara";
-        }
-        var_dump($hoge);
-        return 0;
+        $user_name = env('INITIAL_USER_NAME');
+        $user_email = env('INITIAL_USER_EMAIL');
+        $user_pass = env('INITIAL_USER_PASS');
 
+        User::create([
+            'name' => $user_name,
+            'email' => $user_email,
+            'password' => Hash::make($user_pass),
+        ]);
+        
+        return 0;
     }
 }

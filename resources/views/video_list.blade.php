@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="m-3">
+    <div class="row">
+        <div>
+            <input value="Back" onclick="history.back();" type="button" class="mr-3">
+        </div>
+        <div>
+            <h4 class="align-middle">{{ $channel[0]['name'] }}</h4>
+        </div>
+    </div>
+</div>
+
 <table class="table table-hover">
     <thead>
         <tr>
