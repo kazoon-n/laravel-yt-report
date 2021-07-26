@@ -129,7 +129,7 @@ class RetriveInitialVideoBatch extends Command
                         'description' => mb_substr($snippet['description'], 0, 190),
                         'views' => $statistics['viewCount'] != null ? $statistics['viewCount'] : 0,
                         'likes' => $statistics['likeCount'] != null ? $statistics['likeCount'] : 0,
-                        'comments' => $statistics['commentCount'],
+                        'comments' => $statistics['commentCount'] != null ? $statistics['commentCount'] : 0,
                         'channel_id' => $int_ch_id
                     ];
                     var_dump($upsert_video);
