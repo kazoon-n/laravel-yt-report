@@ -28,7 +28,6 @@ class Kernel extends ConsoleKernel
         $schedule->call('batch:getAllRetrivalVideo')->dailyAt('01:00')->timezone('Asia/Bangkok');
         //Get all daily_video
         $schedule->call('batch:getDailyVideoAll')->dailyAt('01:00')->timezone('Asia/Bangkok');
-
     }
 
     /**
