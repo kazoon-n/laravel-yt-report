@@ -126,7 +126,7 @@ class RetriveInitialVideoBatch extends Command
                         'video_id' => $vdDetail['id'],
                         'name' => $snippet['title'],
                         'thumbnail' => $snippet['thumbnails']['default']['url'],
-                        'description' => $snippet['description'],
+                        'description' => mb_substr($snippet['description'], 0, 190),
                         'views' => $statistics['viewCount'],
                         'likes' => $statistics['likeCount'],
                         'comments' => $statistics['commentCount'],
