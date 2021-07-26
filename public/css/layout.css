@@ -14,3 +14,7 @@
     text-overflow: ellipsis;
     white-space: pre-line;
 }
+
+.my-list-body{
+    height: calc(100vh - (55px + 48px));
+}

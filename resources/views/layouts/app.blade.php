@@ -69,25 +69,42 @@
         <main>
             <div class="row">
                 <div class="col-md-2">
+                    <!-- <ul class="nav flex-column nav-pills h-100">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Active</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul> -->
                     <div class="list-group">
                         <a href="/home" class="list-group-item list-group-item-action
                             @if($page=="channel") active @endif ">
                             Channel List
                         </a>
-                        <a href=" /channel" class="list-group-item list-group-item-action 
+                        <a href="/channel" class="list-group-item list-group-item-action 
                             @if($page=="add_channel") active @endif ">
                             Add Channel
                         </a>
-                        <a href=" /user_list" class="list-group-item list-group-item-action
+                        <a href="/user_list" class="list-group-item list-group-item-action
                             @if($page=="user") active @endif ">
                             User Management
+                        </a>
+                        <a href=" #" class="list-group-item disabled my-list-body">
+
                         </a>
                     </div>
                 </div>
                 <div class=" col-md-10">
-                            @yield('content')
-                    </div>
+                    @yield('content')
                 </div>
+            </div>
         </main>
     </div>
 </body>
