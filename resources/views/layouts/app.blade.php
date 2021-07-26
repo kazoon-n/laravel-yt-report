@@ -69,20 +69,6 @@
         <main>
             <div class="row">
                 <div class="col-md-2">
-                    <!-- <ul class="nav flex-column nav-pills h-100">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Active</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
-                    </ul> -->
                     <div class="list-group">
                         <a href="/home" class="list-group-item list-group-item-action
                             @if($page=="channel") active @endif ">
